@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实力工厂·品质箱包 - 中国箱包之都白沟</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent: #b38b2e;
+            --text: #111111;
+            --muted: #6b7280;
+            --line: #e5e7eb;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            background: #ffffff;
+            color: var(--text);
+            line-height: 1.9;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* 顶部信息区 */
+        .header {
+            background: #ffffff;
+            color: var(--text);
+            padding: 72px 24px 48px 24px;
+            text-align: center;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: var(--text);
+            letter-spacing: 0.04em;
+        }
+
+        .info-content {
+            max-width: 920px;
+            margin: 0 auto;
+            font-size: 1.125rem;
+            line-height: 2;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        .info-content p {
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .contact-info {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid var(--line);
+        }
+
+        .contact-item {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+
+        .phone {
+            color: #ffd700;
+            font-size: 1.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        a.phone {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a.phone:hover {
+            text-decoration: underline;
+        }
+
+        /* 图片展示区 */
+        .gallery-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .gallery {
+            column-count: 4;
+            column-gap: 24px;
+        }
+
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 24px;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: zoom-in;
+        }
+
+        .gallery-item:hover {
+            box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 大图预览模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            position: relative;
+            margin: auto;
+            display: block;
+            max-width: 90vw;
+            max-height: 90vh;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: zoomIn 0.25s;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        @keyframes zoomIn {
+            from { transform: translateY(-50%) scale(0.5); }
+            to { transform: translateY(-50%) scale(1); }
+        }
+
+        .close {
+            position: absolute;
+            top: 16px;
+            right: 24px;
+            color: #fff;
+            font-size: 32px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.2s;
+            z-index: 1001;
+        }
+
+        .close:hover {
+            color: #ffd700;
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            font-size: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 12px 16px;
+            user-select: none;
+            background: rgba(255,255,255,0.08);
+            border-radius: 999px;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .modal-nav:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.16);
+        }
+
+        .prev {
+            left: 20px;
+        }
+
+        .next {
+            right: 20px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .gallery { column-count: 3; }
+        }
+
+        @media (max-width: 900px) {
+            .gallery { column-count: 2; }
+        }
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2em;
+                letter-spacing: 2px;
+            }
+
+            .info-content {
+                font-size: 1em;
+                padding: 20px;
+            }
+
+            .phone {
+                font-size: 1.2em;
+            }
+
+            .gallery {
+                column-count: 1;
+                column-gap: 20px;
+            }
+
+            .gallery-item img {
+                height: auto;
+            }
+
+            .close {
+                top: 10px;
+                right: 20px;
+                font-size: 40px;
+            }
+
+            .modal-nav {
+                font-size: 35px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部信息区 -->
+    <header class="header">
+        <h1 class="main-title">实力工厂·品质箱包</h1>
+        <div class="info-content">
+            <p><span class="highlight">承接中外订单</span></p>
+            <p>
+                自有<span class="highlight">1500㎡生产基地</span>，<span class="highlight">20年箱包定制经验</span>，从设计打样到批量生产全链服务。<br>
+                支持<span class="highlight">OEM/ODM</span>，覆盖旅行箱、背包、手提袋、公文包等<span class="highlight">全品类</span>。
+            </p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <strong>合作热线：</strong><a class="phone" href="tel:16776931979">16776931979</a>
+                </div>
+                <div class="contact-item">
+                    欢迎实地考察，按需定制，以工厂直供价，助您抢占市场！
+                </div>
+                <div class="contact-item">
+                    <strong>地址：</strong><span class="highlight">中国箱包之都，河北白沟</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 图片展示区 -->
+    <section class="gallery-section">
+        <div class="gallery">
+            <div class="gallery-item" onclick="openModal(0)">
+                <img src="0.jpg" alt="箱包产品">
+            </div>
+            <div class="gallery-item" onclick="openModal(1)">
+                <img src="1.png" alt="箱包产品">
+            </div>
+            <div class="gallery-item" onclick="openModal(2)">
+                <img src="2.png" alt="箱包产品">
+            </div>
+            <div class="gallery-item" onclick="openModal(3)">
+                <img src="3.jpg" alt="箱包产品">
+            </div>
+            <div class="gallery-item" onclick="openModal(4)">
+                <img src="4.jpg" alt="箱包产品">
+            </div>
+            <div class="gallery-item" onclick="openModal(5)">
+                <img src="5.jpg" alt="箱包产品">
+            </div>
+            <div class="gallery-item" onclick="openModal(6)">
+                <img src="6.jpg" alt="箱包产品">
+            </div>
+            <div class="gallery-item" onclick="openModal(7)">
+                <img src="7.jpg" alt="箱包产品">
+            </div>
+            <div class="gallery-item" onclick="openModal(8)">
+                <img src="8.jpg" alt="箱包产品">
+            </div>
+            <div class="gallery-item" onclick="openModal(9)">
+                <img src="9.jpg" alt="箱包产品">
+            </div>
+        </div>
+    </section>
+
+    <!-- 大图预览模态框 -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close">&times;</span>
+        <span class="modal-nav prev" onclick="event.stopPropagation(); changeImage(-1)">&#10094;</span>
+        <img class="modal-content" id="modalImg">
+        <span class="modal-nav next" onclick="event.stopPropagation(); changeImage(1)">&#10095;</span>
+    </div>
+
+    <script>
+        const images = [
+            '0.jpg', '1.png', '2.png', '3.jpg', '4.jpg',
+            '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg'
+        ];
+        let currentIndex = 0;
+
+        function openModal(index) {
+            currentIndex = index;
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modal.style.display = 'block';
+            modalImg.src = images[currentIndex];
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        function changeImage(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = images.length - 1;
+            if (currentIndex >= images.length) currentIndex = 0;
+            document.getElementById('modalImg').src = images[currentIndex];
+        }
+
+        // 键盘控制
+        document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById('imageModal');
+            if (modal.style.display === 'block') {
+                if (e.key === 'Escape') closeModal();
+                if (e.key === 'ArrowLeft') changeImage(-1);
+                if (e.key === 'ArrowRight') changeImage(1);
+            }
+        });
+    </script>
+</body>
+</html>
+

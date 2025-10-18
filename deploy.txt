@@ -1,0 +1,25 @@
+GitHub Pages 部署命令（复制到命令行执行）
+==============================================
+
+# 第一步：初始化Git仓库
+git init
+
+# 第二步：添加所有文件
+git add .
+
+# 第三步：提交
+git commit -m "Initial commit: 箱包展示网站"
+
+# 第四步：连接到GitHub（替换YOUR_USERNAME和YOUR_REPO）
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+
+# 第五步：推送到GitHub
+git branch -M main
+git push -u origin main
+
+# 完成后，去GitHub仓库设置中启用Pages即可
+
+==============================================
+访问地址：https://YOUR_USERNAME.github.io/YOUR_REPO/
+==============================================
+
